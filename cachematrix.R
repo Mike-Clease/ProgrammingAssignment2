@@ -1,35 +1,40 @@
-## Put comments here that give an overall description of what your
-## functions do
-
-## Write a short comment describing this function
+## takes a square matrix (x) and returns a list of functions in order to 
+## a) set the matrix (set)
+## b) get the matrix (get)
+## c) set the inverse of the matrix (setinverse)
+## d) get the inverse of the matrix (getinverse)
 
 makeCacheMatrix <- function(x = matrix()) {
 
-  z <- NULL
+  i <- NULL # set z to null
   set <- function(y) {
+    # assigns (using "<<-") values y and NULL to objects x & i in a
+    # different environment
     x <<- y
-    z <<- NULL
+    i <<- NULL
   }
-  get <- function() x
-  setinverse <- function(inverse) z <<- inverse
-  getinverse <- function() z
+  get <- function() x 
+  setinverse <- function(inverse) i <<- inverse
+  getinverse <- function() i
   list(set = set, get = get,
        setinverse = setinverse,
        getinverse = getinverse)
 }
 
-
-## Write a short comment describing this function
+## takes the output of makeCacheMatrix (x), checks getinverse to
+## see if the inverse is in the cache and either return it from
+## the cache or calculates it and then sets the value in the cache
 
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
-  z <- x$getinverse()
-  if(!is.null(z)) {
+  i = x$getinverse()
+  if(!is.null(i)) { #if inverse is already calculate then...
     message("getting cached data")
-    return(z)
+    return(i)
   }
+  # if inverse wasn't cached then calculate it
   data <- x$get()
-  z <- solve(data, ...)
-  x$setinverse(z)
-  z
+  i <- solve(data, ...)
+  x$setinverse(i)
+  i
 }
